@@ -28,7 +28,7 @@ const Modal = () => {
     if(background==="black"){
       document.documentElement.style.color="white"
     }else{
-      return backgroundColor
+      document.documentElement.style.color="black"
     }
     document.documentElement.style.setProperty("--primary", basicColor);
     document.documentElement.style.setProperty("--background",background);

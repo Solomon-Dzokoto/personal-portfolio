@@ -16,5 +16,6 @@ export default {
     },
   },
   plugins: [],
+  base:"/personal-portfolio"
 }
 

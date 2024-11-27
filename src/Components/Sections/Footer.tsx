@@ -1,4 +1,4 @@
-import {data} from '../data/NavData'
+import {data} from '../../data/NavData'
 
 
 const Footer = () => {

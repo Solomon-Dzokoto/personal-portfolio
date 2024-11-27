@@ -1,6 +1,6 @@
-import Cards from "./Card"
-import {data} from '../data/ProjectData'
-import Button from './Button';
+import Cards from "../Card"
+import {data} from '../../data/ProjectData'
+import Button from '../Button';
 import {motion} from 'framer-motion'
 
 const Projects = () => {

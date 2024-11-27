@@ -1,5 +1,5 @@
-import Button from './Button'
-import {data} from '../data/contactData'
+import Button from '../Button'
+import {data} from '../../data/contactData'
 import { useState } from 'react'
 import {motion} from 'framer-motion'
 

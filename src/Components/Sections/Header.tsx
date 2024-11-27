@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import NavBar from "./NavBar"
-import Hero from "./Hero";
+import NavBar from "../NavBar"
+import Hero from "../Hero";
 import { IoColorPaletteOutline } from "react-icons/io5";
-import { context } from "../Hooks/useContextApi";
+import { context } from "../../Hooks/useContextApi";
 
 const Header = () => {
   const {setIsOpen}=useContext(context)

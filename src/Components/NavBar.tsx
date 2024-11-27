@@ -31,7 +31,7 @@ const NavBar = () => {
     <nav>
       <ul
         className={`fixed ${onScroll ? "translate-y-0 md:translate-y0" : "translate-y-[55rem] md:translate-y-0"} 
-        z-50 md:relative md:bottom-0 md:left-0 bottom-4 left-1/4 bg-primary py-2 
+        z-50 md:relative md:bottom-0 md:left-0 bottom-0 left-1/2 transform -translate-x-1/2 bg-primary py-2 
         rounded-full flex items-center gap-2 px-8 transition-transform duration-300`}
       >
         {data.map((item) => (

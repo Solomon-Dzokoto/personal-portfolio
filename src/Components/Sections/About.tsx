@@ -1,11 +1,11 @@
-import Image  from "../assets/IMG_3969 2.jpg"
+import Image  from "../../assets/IMG_3969 2.jpg"
 import { FaCode,FaMobileAlt,FaServer} from "react-icons/fa"
-import Cards from "./Card"
+import Cards from "../Card"
 import { FaAward } from "react-icons/fa";
 import { TbBooks } from "react-icons/tb";
 import { BiHappyHeartEyes } from "react-icons/bi";
-import Resume from '../assets/Resume (1).pdf'
-import Button from "./Button";
+import Resume from '../../assets/Resume (1).pdf'
+import Button from "../Button";
 import {motion} from 'framer-motion'
 
 

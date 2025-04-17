@@ -129,8 +129,7 @@ const About = () => {
             >
               <FaDownload />
               <a
-                href=""
-                download="Solomon_Elorm_Dzokoto"
+                href="https://docs.google.com/document/d/1Xz8HJODsC7pwyPn9wF_ZcMxo6tckg23H8AjjNO55Hd4/edit?usp=sharing"
                 rel="noopener noreferrer"
                 target="_blank"
               >

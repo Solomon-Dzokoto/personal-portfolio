@@ -1,103 +1,256 @@
-import Button from '../Button'
-import {data} from '../../data/contactData'
-import { useState } from 'react'
-import {motion} from 'framer-motion'
-
+import Button from "../Button";
+import { data } from "../../data/contactData";
+import { useState, FormEvent } from "react";
+import { motion } from "framer-motion";
+import { FaPaperPlane, FaCheckCircle } from "react-icons/fa";
 
 const Contact = () => {
-   const [name,setName]=useState<string>("")
-   const [email,setEmail]=useState<string>("")
-   const [message,setMessage]=useState<string>("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+  }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const validateForm = () => {
+    const newErrors: { name?: string; email?: string; message?: string } = {};
 
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!message.trim()) {
+      newErrors.message = "Message is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      setIsSubmitting(true);
+
+      // Simulating form submission
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setName("");
+        setEmail("");
+        setMessage("");
+
+        // Reset success message after some time
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      }, 1500);
+    }
+  };
 
   return (
-    <section id='Contacts' className="mt-[4rem] min-h-[60vh] gap-8  grid md:grid-cols-2" style={{paddingInline:'clamp(.7rem,4vw,5rem)'}} >
-      <div className="grid place-content-center">
-      <h1 className="text-3xl mb-6 underline decoration-primary underline-offset-8  font-semibold">Contact <span className="text-primary">Me</span></h1>
-      <p>
-        If you enjoy my project or come across any bugs, feel free to reach out with suggestions for improvements or new features. I'd love to hear your feedback!
+    <section
+      id="Contact"
+      className="mt-[4rem] pb-16"
+      style={{ paddingInline: "clamp(.7rem,4vw,5rem)" }}
+    >
+      <h1 className="text-3xl mb-2 text-center font-semibold">
+        Get In <span className="text-primary">Touch</span>
+      </h1>
+      <p className="text-center max-w-2xl mx-auto mb-12">
+        Have a project in mind or want to discuss potential opportunities? I'd
+        love to hear from you! Reach out through the form below or connect with
+        me directly.
       </p>
-      <h3 className="font-bold text-2xl mt-4 text-primary">Get In touch with me 👇🥰</h3>
-      <motion.ul
-       variants={{hidden:{opacity:0.2},show:{opacity:1,transition:{staggerChildren:0.2}}}}
-       whileInView='show'
-       initial='hidden'
-       viewport={{amount:0.5}}
-      className='flex mt-4 gap-2'>
-        {
-        data.map((item)=>(
-         <motion.li variants={{hidden:{opacity:0,y:50},show:{opacity:1,y:0}}} key={item.id}>
-            <a href={item.link} target='_blank'>
-            <Button className='' variant='secondary' >
-              {item.icon} 
-            </Button>
-            </a> 
-         </motion.li>
-        ))
-        }
-      </motion.ul>
-      </div>
-      <div className="">
-      <h1 className="text-3xl mb-6 underline decoration-primary underline-offset-8  text-center md:text-end font-semibold"><span className="text-primary">Contact </span> Form</h1>
-      <form  method="post" id="submit-contact-form">
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="name" className="leading-7 py-4 text-lg text-gray-900">Your Name</label>
+
+      <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="bg-gray-900 bg-opacity-50 p-8 rounded-lg border border-gray-800"
+        >
+          <h2 className="text-2xl font-semibold mb-6">
+            Contact <span className="text-primary">Information</span>
+          </h2>
+          <p className="mb-8">
+            I'm interested in freelance opportunities, especially ambitious or
+            large projects. If you have questions or feedback about my
+            portfolio, don't hesitate to reach out!
+          </p>
+
+          <h3 className="font-bold text-xl mb-4 text-primary">
+            Connect with me
+          </h3>
+          <motion.ul
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.2 },
+              },
+            }}
+            whileInView="show"
+            initial="hidden"
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-4 mb-8"
+          >
+            {data.map((item) => (
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                key={item.id}
+              >
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Link to ${item.name}`}
+                >
+                  <Button
+                    className="flex items-center justify-center"
+                    variant="secondary"
+                  >
+                    {item.icon}
+                  </Button>
+                </a>
+              </motion.li>
+            ))}
+          </motion.ul>
+
+          <div className="bg-black bg-opacity-30 p-4 rounded-lg">
+            <p className="text-sm italic">
+              "The best way to predict the future is to create it." <br />-
+              Abraham Lincoln
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-2xl font-semibold mb-6">
+            <span className="text-primary">Send Me</span> a Message
+          </h2>
+
+          {isSubmitted ? (
+            <div className="bg-green-900 bg-opacity-20 border border-green-500 rounded-lg p-6 flex flex-col items-center justify-center h-[400px]">
+              <FaCheckCircle className="text-5xl text-green-500 mb-4" />
+              <h3 className="text-xl font-bold mb-2">
+                Message Sent Successfully!
+              </h3>
+              <p className="text-center">
+                Thank you for reaching out. I'll get back to you as soon as
+                possible.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block mb-2 font-medium">
+                  Your Name
+                </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  required
                   value={name}
-                  placeholder='Enter your name here'
+                  placeholder="Enter your name"
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-white rounded border border-gray-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className={`w-full bg-gray-900 rounded-lg border ${
+                    errors.name ? "border-red-500" : "border-gray-700"
+                  } focus:border-primary p-3 focus:outline-none focus:ring-1 focus:ring-primary transition-colors`}
                 />
+                {errors.name && (
+                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                )}
               </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="email" className="leading-7 py-4 text-lg text-gray-900">Your Email</label>
+
+              <div>
+                <label htmlFor="email" className="block mb-2 font-medium">
+                  Your Email
+                </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  required
                   value={email}
-                  placeholder='example@gmail.com'
+                  placeholder="example@domain.com"
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white rounded border border-gray-400 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className={`w-full bg-gray-900 rounded-lg border ${
+                    errors.email ? "border-red-500" : "border-gray-700"
+                  } focus:border-primary p-3 focus:outline-none focus:ring-1 focus:ring-primary transition-colors`}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
               </div>
-            </div>
-            <div className="p-2 w-full">
-              <div className="relative">
-                <label htmlFor="message" className="leading-7 py-4 text-lg text-gray-900">Your Message</label>
+
+              <div>
+                <label htmlFor="message" className="block mb-2 font-medium">
+                  Your Message
+                </label>
                 <textarea
                   id="message"
                   name="message"
-                  required
                   value={message}
-                  placeholder='Your Message'
+                  placeholder="Write your message here..."
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full bg-white rounded border border-gray-400 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 h-32 text-base outline-none text-gray-900 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  rows={5}
+                  className={`w-full bg-gray-900 rounded-lg border ${
+                    errors.message ? "border-red-500" : "border-gray-700"
+                  } focus:border-primary p-3 focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none`}
                 />
+                {errors.message && (
+                  <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                )}
               </div>
-            </div>
-            <div className="p-2 w-full text-center ">
-              <button type='submit'>
-                <Button variant='primary'
-                  className="flex text-white border-0 py-4 px-6 focus:outline-none rounded text-xl font-bold shadow-lg mx-0 flex-col text-center g-recaptcha"
+
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className={`flex items-center justify-center gap-2 w-full py-3 ${
+                    isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
+                  disabled={isSubmitting}
                 >
-                  Send Message ✉
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <FaPaperPlane />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </Button>
-              </button>
-            </div>
-          </form>
+              </div>
+            </form>
+          )}
+        </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
